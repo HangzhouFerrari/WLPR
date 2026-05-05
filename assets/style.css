@@ -247,7 +247,7 @@ body {
 /* ── Scroll area ─────────────────────────────── */
 .main-scroll {
   padding-top: calc(52px + 8px);
-  padding-bottom: calc(68px + 36px);
+  padding-bottom: calc(68px + env(safe-area-inset-bottom) + 36px);
   min-height: 100vh;
 }
 
@@ -423,6 +423,8 @@ body {
   border-top: 1px solid var(--border);
   display: flex; align-items: center;
   z-index: 500;
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(68px + env(safe-area-inset-bottom));
   transition: background 0.35s, border-color 0.35s;
 }
 .nav-item {
@@ -439,6 +441,7 @@ body {
 .nav-item.active { color: var(--text); }
 .nav-item:active { transform: scale(0.88); color: var(--text); }
 .nav-fade {
+  bottom: calc(68px + env(safe-area-inset-bottom));
   position: fixed; bottom: 68px; left: 0; right: 0; height: 40px;
   background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
   pointer-events: none; z-index: 499;
@@ -480,16 +483,30 @@ body.detail-page[data-theme="light"] { background: #111; }
 }
 
 .detail-panel {
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
-  background: rgba(10,10,10,0.9);
-  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 50;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid rgba(255,255,255,0.07);
   border-radius: 16px 16px 0 0;
-  padding: 12px 20px 44px;
-  transform: translateY(20px);
-  opacity: 0;
-  animation: panelIn 0.45s cubic-bezier(.22,.68,0,1.1) 0.15s forwards;
+  transition: transform 0.42s cubic-bezier(.32,.72,0,1);
+  will-change: transform;
+  max-height: 92vh;
+  overflow: hidden;
 }
+.detail-panel-inner {
+  padding: 12px 20px 48px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 92vh;
+}
+.detail-panel[data-state="mini"]   { transform: translateY(calc(100% - 68px)); }
+.detail-panel[data-state="normal"] { transform: translateY(0); overflow: hidden; }
+.detail-panel[data-state="full"]   { transform: translateY(0); }
+.detail-panel[data-state="full"] .detail-panel-inner { overflow-y: auto; }
+.detail-panel:not([data-state="full"]) .detail-panel-inner { overflow-y: hidden; }
 [data-theme="light"] .detail-panel {
   background: rgba(245,244,240,0.9);
 }

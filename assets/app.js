@@ -77,6 +77,7 @@ function buildCardGrid(w) {
 
 function buildCollectionCard(c) {
   const el = document.createElement('div');
+  el.onclick = () => nav(`browse.html?collection=${c.id}`);
   el.className = 'collection-card';
   el.innerHTML = `
     <div class="collection-thumb">
@@ -101,15 +102,7 @@ function pageIn() {
 }
 
 function nav(url) {
-  const wrap = document.querySelector('.page-wrap');
-  if (wrap) {
-    wrap.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
-    wrap.style.opacity = '0';
-    wrap.style.transform = 'translateY(-10px)';
-    setTimeout(() => location.href = url, 200);
-  } else {
-    location.href = url;
-  }
+  location.href = url;
 }
 
 // ── HOME ─────────────────────────────────────
@@ -124,7 +117,7 @@ async function initHomePage() {
   renderHomeSection('apkSection',  WALLPAPERS.apk.map(w => ({ ...w, type: 'apk' })));
   renderCollections();
   renderHomeGrid(allWallpapers().slice(0, 8));
-  initHomeTabs();
+  setTimeout(initHomeTabs, 0); // na render
   translatePage();
 }
 
@@ -225,10 +218,9 @@ function renderHomeGrid(items) {
 }
 
 function initHomeTabs() {
-  const tabs = document.querySelectorAll('.tab');
-  tabs.forEach(tab => {
+  document.querySelectorAll('.tabs-bar .tab').forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tabs-bar .tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       const type = tab.dataset.tab;
       let items = allWallpapers();
@@ -248,6 +240,8 @@ async function initBrowsePage() {
   pageIn();
   const params = new URLSearchParams(location.search);
   const pre = params.get('filter') || params.get('type') || 'all';
+  const collId = params.get('collection');
+  if (collId) { /* filter op collectie */ }
   renderFiltered(pre);
   initFilterPills(pre);
   translatePage();
@@ -352,9 +346,26 @@ function renderDetail(w) {
 
   // Download button
   if (dlBtn) {
-    dlBtn.href = assetUrl(w.file || imgSrc || '#');
-    dlBtn.download = `${w.title.toLowerCase().replace(/\s+/g,'_')}_wlpr.${isApk ? 'apk' : isLive ? 'mp4' : 'jpg'}`;
-    dlBtn.querySelector('span').textContent = isApk ? t('install_apk') : t('download');
+    if (dlBtn) {
+  dlBtn.href = '#';
+  dlBtn.onclick = async (e) => {
+    e.preventDefault();
+    const url = assetUrl(w.file || imgSrc || '');
+    if (!url) return;
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = w.title.toLowerCase().replace(/\s+/g,'_') + (isApk ? '.apk' : isLive ? '.mp4' : '.jpg');
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } catch {
+      window.open(url, '_blank');
+    }
+  };
+  dlBtn.querySelector('span').textContent = isApk ? t('install_apk') : t('download');
+}
   }
 
   // APK extra info + guide
