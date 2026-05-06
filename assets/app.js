@@ -374,6 +374,7 @@ function initDetailPanel() {
   function setState(s) {
     state = s;
     panel.dataset.state = s;
+    if (s !== 'full') panel.scrollTop = 0;
   }
 
   // ── Universal pointer handler (touch + mouse for desktop testing) ──
@@ -422,7 +423,7 @@ function initDetailPanel() {
     // Mouse wheel on laptop: scroll down → full, scroll up in mini → normal
     panel.addEventListener('wheel', e => {
       if (state === 'normal' && e.deltaY > 0) setState('full');
-      if (state === 'full'   && e.deltaY < 0 && inner.scrollTop === 0) setState('normal');
+      if (state === 'full'   && e.deltaY < 0 && panel.scrollTop === 0) setState('normal');
       if (state === 'mini'   && e.deltaY < 0) setState('normal');
     }, {passive: true});
   }

@@ -42,9 +42,9 @@
 
   <!-- Drag zone: handle + title visible in all states -->
   <div class="panel-drag-zone" id="panelDragZone">
+    <div class="panel-handle"></div>
     <!-- APK / LIVE type badge — shown only when relevant, sits above handle -->
     <div id="typeBadge" style="display:none;align-self:flex-start;margin-bottom:-4px"></div>
-    <div class="panel-handle"></div>
     <div class="panel-header-row">
       <div>
         <div class="panel-title" id="panelTitle">—</div>
@@ -93,31 +93,31 @@
   <!-- App row -->
   <div class="share-apps">
     <button class="share-app-btn" onclick="shareTo('whatsapp')">
-      <div class="share-app-icon" style="background:#25d366">💬</div>
+      <div class="share-app-icon"><img src="https://play-lh.googleusercontent.com/bYtqbOcTYOlgc6gqZ2rwb8lptHuwlNE75zYJu6Bn076-hTmvd96HH-6v7S0YUAAJXoJN" alt="WhatsApp" style="border-radius: 13px;width:100%;height:100%;object-fit:contain"></div>
       <div class="share-app-label">WhatsApp</div>
     </button>
     <button class="share-app-btn" onclick="shareTo('messenger')">
-      <div class="share-app-icon" style="background:linear-gradient(135deg,#0078ff,#a334fa)">💬</div>
+      <div class="share-app-icon"><img src="https://play-lh.googleusercontent.com/JfQNUnohpuq5IP65WN9C109VjLjDEj2tZYlPtComLznQfGeeoesubOaHGBcpZdXKuHU" alt="WhatsApp" style="border-radius: 13px;width:100%;height:100%;object-fit:contain"></div>
       <div class="share-app-label">Messenger</div>
     </button>
     <button class="share-app-btn" onclick="shareTo('telegram')">
-      <div class="share-app-icon" style="background:#2aabee">✈️</div>
+      <div class="share-app-icon"><img src="https://play-lh.googleusercontent.com/ZU9cSsyIJZo6Oy7HTHiEPwZg0m2Crep-d5ZrfajqtsH-qgUXSqKpNA2FpPDTn-7qA5Q" alt="Telegram" style="border-radius: 13px;width:100%;height:100%;object-fit:contain"></div>
       <div class="share-app-label">Telegram</div>
     </button>
     <button class="share-app-btn" onclick="shareTo('instagram')">
-      <div class="share-app-icon" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)">📷</div>
+      <div class="share-app-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" style="width:100%;height:100%;object-fit:contain"></div>
       <div class="share-app-label">Instagram</div>
     </button>
     <button class="share-app-btn" onclick="shareTo('x')">
-      <div class="share-app-icon" style="background:#000;color:#fff;font-family:serif;font-weight:bold;font-size:20px">𝕏</div>
+      <div class="share-app-icon" style="background:#000;display:flex;align-items:center;justify-content:center"><img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg" alt="X" style="width:50%;height:50%;filter:invert(1)"></div>
       <div class="share-app-label">X</div>
     </button>
     <button class="share-app-btn" onclick="shareTo('tiktok')">
-      <div class="share-app-icon" style="background:#000">🎵</div>
+      <div class="share-app-icon" style="background:#000;display:flex;align-items:center;justify-content:center"><img src="https://play-lh.googleusercontent.com/BmUViDVOKNJe0GYJe22hsr7juFndRVbvr1fGmHGXqHfJjNAXjd26bfuGRQpVrpJ6YbA=w240-h480-rw" alt="TikTok" style="width:55%;height:55%;filter:invert(1)"></div>
       <div class="share-app-label">TikTok</div>
     </button>
     <button class="share-app-btn" onclick="shareTo('outlook')">
-      <div class="share-app-icon" style="background:#0078d4">📧</div>
+      <div class="share-app-icon"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="var(--text)" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 4.5)"><path d="m0 2v8c0 1.1045695.8954305 2 2 2h10c1.1045695 0 2-.8954305 2-2v-8c0-1.1045695-.8954305-2-2-2h-10c-1.1045695 0-2 .8954305-2 2z"/><path d="m2 3 5 3 5-3"/></g></svg></div>
       <div class="share-app-label">Email</div>
     </button>
     <button class="share-app-btn" onclick="nativeShare()">

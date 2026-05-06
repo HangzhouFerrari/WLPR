@@ -235,9 +235,6 @@ body.detail-page[data-theme="light"] { background: #111; }
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 100;
-  /* Panel height = 64vh in normal state.
-     In full state it rises but bottom stays at screen bottom,
-     so we use min-height: 100vh to ensure content fills downward. */
   height: 64vh;
   min-height: 64vh;
   display: flex;
@@ -246,18 +243,18 @@ body.detail-page[data-theme="light"] { background: #111; }
   backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
   border-radius: 18px 18px 0 0;
   border-top: 1px solid rgba(255,255,255,0.08);
-  will-change: transform;
-  transition: transform 0.44s cubic-bezier(.32,.72,0,1);
+  will-change: transform, height;
+  transition: transform 0.44s cubic-bezier(.32,.72,0,1), height 0.44s cubic-bezier(.32,.72,0,1);
   transform: translateY(0);
 }
 [data-theme="light"] .detail-panel { background: rgba(238,236,232,0.96); }
 
 /* mini: only ~70px visible (handle + title) */
-.detail-panel[data-state="mini"]   { transform: translateY(calc(100% - 70px)); }
-/* normal: panel starts at 36% from bottom */
-.detail-panel[data-state="normal"] { transform: translateY(0); }
-/* full: panel rises — bottom stays anchored, top goes near top of screen */
-.detail-panel[data-state="full"]   { transform: translateY(calc(-1 * (36vh - 70px - var(--safe-top)))); height: calc(64vh + 36vh - 70px - var(--safe-top)); }
+.detail-panel[data-state="mini"]   { transform: translateY(calc(100% - 60px)); }
+/* normal: panel sits at bottom, 64vh tall */
+.detail-panel[data-state="normal"] { transform: translateY(0); height: 64vh; }
+/* full: bottom stays anchored, top grows upward — no translateY shift */
+.detail-panel[data-state="full"]   { transform: translateY(0); height: calc(100vh - var(--safe-top) - 60px); }
 
 /* Drag zone — top portion of panel, large touch target */
 .panel-drag-zone {
@@ -265,6 +262,12 @@ body.detail-page[data-theme="light"] { background: #111; }
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   touch-action: none; /* we handle all touch events here */
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: inherit;
+  border-radius: 18px 18px 0 0;
+  flex-shrink: 0;
 }
 .panel-handle { width: 38px; height: 4px; background: rgba(255,255,255,0.18); border-radius: 2px; }
 [data-theme="light"] .panel-handle { background: rgba(0,0,0,0.12); }
@@ -279,15 +282,24 @@ body.detail-page[data-theme="light"] { background: #111; }
 [data-theme="light"] .panel-meta { color: rgba(0,0,0,0.38); }
 .color-swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.12); flex-shrink: 0; }
 
-/* Scrollable inner — fills remaining panel height, only scrolls in full state */
+/* Scrollable inner — fills remaining panel height */
 .panel-inner {
   padding: 4px 20px calc(var(--safe-bottom) + 28px);
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  flex: 1; /* fill remaining height in flex column panel */
-  min-height: 0; /* required for flex overflow to work */
+  flex: 1;
+  min-height: 0;
 }
-.detail-panel[data-state="full"] .panel-inner { overflow-y: auto; }
+/* In full state: panel itself scrolls, inner just flows naturally */
+.detail-panel[data-state="full"] {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.detail-panel[data-state="full"] .panel-inner {
+  overflow-y: visible;
+  flex: unset;
+  min-height: 0;
+}
 
 .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .tag { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-family: 'Space Mono', monospace; font-size: 0.53rem; letter-spacing: 2px; padding: 4px 10px; border-radius: 2px; cursor: pointer; transition: all 0.15s; }
@@ -345,7 +357,7 @@ body.detail-page[data-theme="light"] { background: #111; }
 .share-apps::-webkit-scrollbar { display: none; }
 .share-app-btn { display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 4px 12px; background: none; border: none; cursor: pointer; color: var(--text); flex-shrink: 0; transition: opacity 0.15s; }
 .share-app-btn:active { opacity: 0.6; }
-.share-app-icon { width: 50px; height: 50px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: var(--bg3); }
+.share-app-icon { width: 50px; height: 50px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: var(--bg3); box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
 .share-app-label { font-family: 'Space Mono', monospace; font-size: 0.48rem; letter-spacing: 1px; color: var(--text2); }
 
 .share-actions { padding: 4px 0; border-bottom: 1px solid var(--border); }
