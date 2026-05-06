@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+  <title>Collection — WLPR</title>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#0a0a0a"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/style.css"/>
+  <script src="assets/i18n.js"></script>
+  <script src="assets/data.js"></script>
+</head>
+<body>
+<div class="noise-overlay"></div>
+
+<!-- Hero banner showing collection cover -->
+<div id="collectionHero" style="
+  position:fixed; top:0; left:0; right:0;
+  height: calc(180px + var(--safe-top));
+  z-index:0; overflow:hidden; background: var(--bg3);
+">
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,var(--bg) 100%);z-index:1"></div>
+  <img id="collectionCover" src="" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"/>
+</div>
+
+<header class="app-header" style="background:transparent;border-bottom:none;backdrop-filter:none;-webkit-backdrop-filter:none">
+  <div class="header-inner">
+    <button class="header-btn" onclick="history.back()"
+      style="background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1)">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="header-btn" onclick="location.href='search.html'"
+      style="background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1)">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="page-wrap" style="padding-top:0">
+  <main style="
+    padding-top: calc(160px + var(--safe-top));
+    padding-bottom: calc(68px + var(--safe-bottom) + 44px);
+    min-height:100vh; position:relative; z-index:1;
+  ">
+    <!-- Collection info -->
+    <div style="padding: 0 16px 20px">
+      <div style="font-family:'Space Mono',monospace;font-size:0.55rem;letter-spacing:3px;color:var(--text3);margin-bottom:4px" data-i18n="collection">COLLECTION</div>
+      <div id="collectionTitle" style="font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:6px;line-height:1;color:var(--text)">—</div>
+      <div id="collectionCount" style="font-family:'Space Mono',monospace;font-size:0.58rem;letter-spacing:2px;color:var(--text3);margin-top:6px"></div>
+    </div>
+
+    <div class="grid-2col" id="collectionGrid"></div>
+    <div class="count-label" id="countLabel"></div>
+    <div class="bottomspace"></div>
+  </main>
+</div>
+
+<nav class="bottom-nav"></nav>
+<div class="nav-fade"></div>
+
+<script src="assets/app.js"></script>
+<script>
+(async function() {
+  applyTheme();
+  await loadWallpaperData();
+  renderNav('browse');
+  translatePage();
+
+  const params = new URLSearchParams(location.search);
+  const colId  = params.get('id');
+  const col    = (WALLPAPERS.collections || []).find(c => c.id === colId);
+
+  if (!col) { location.href = 'browse.html'; return; }
+
+  // Set cover + title
+  document.getElementById('collectionCover').src = assetUrl(col.cover);
+  document.getElementById('collectionTitle').textContent = col.title;
+  document.getElementById('collectionCount').textContent = t('collection_items', col.count);
+  document.title = col.title + ' — WLPR';
+
+  // Get wallpapers belonging to this collection
+  // Each wallpaper can have a "collectionId" field that matches col.id,
+  // OR fall back to showing all static wallpapers from qbocc for now.
+  const grid  = document.getElementById('collectionGrid');
+  const label = document.getElementById('countLabel');
+  const cols  = getGridCols();
+  grid.className = cols === 3 ? 'grid-3col' : 'grid-2col';
+
+  let items = allWallpapers().filter(w => w.collectionId === colId);
+
+  // Fallback when no individual items are tagged yet:
+  // Show all static wallpapers so the page isn't empty.
+  if (!items.length) {
+    items = allWallpapers().filter(w => w.type === 'static' && w.source === 'qbocc');
+  }
+
+  items.forEach(w => grid.appendChild(buildCardGrid(w, cols)));
+  if (label) label.textContent = t('wallpaper_count', items.length);
+
+  // Page in
+  const wrap = document.querySelector('.page-wrap');
+  if (wrap) requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('visible')));
+})();
+</script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js').catch(()=>{})</script>
+</body>
+</html>

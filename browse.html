@@ -17,19 +17,15 @@
 </head>
 <body>
 <div class="noise-overlay"></div>
-
 <header class="app-header">
   <div class="header-inner">
     <button class="header-btn" onclick="history.back()">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     </button>
     <span class="logo" data-i18n="browse">BROWSE</span>
-    <div class="header-right">
-      <button class="theme-btn" onclick="quickToggleTheme()">☀</button>
-      <button class="header-btn" onclick="nav('search.html')">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </button>
-    </div>
+    <button class="header-btn" onclick="location.href='search.html'">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
   </div>
 </header>
 
@@ -53,7 +49,6 @@
 
 <nav class="bottom-nav"></nav>
 <div class="nav-fade"></div>
-
 <script src="assets/app.js"></script>
 <script>initBrowsePage();</script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js').catch(()=>{})</script>

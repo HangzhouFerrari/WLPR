@@ -17,24 +17,24 @@
 </head>
 <body>
 <div class="noise-overlay"></div>
-
 <header class="app-header">
   <div class="header-inner">
     <button class="header-btn" onclick="history.back()">
       <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
     </button>
     <div class="search-wrap">
-      <input type="text" id="searchInput" class="search-input" autofocus
-             placeholder="SEARCH WALLPAPERS" data-i18n-ph="search_placeholder"/>
+      <input type="text" id="searchInput" class="search-input"
+             placeholder="SEARCH WALLPAPERS" autofocus
+             data-i18n-ph="search_placeholder"/>
     </div>
-    <button class="theme-btn" onclick="quickToggleTheme()">☀</button>
   </div>
 </header>
 
 <div class="page-wrap">
-  <main class="main-scroll" style="padding-top: 68px">
-    <div style="padding:0 16px 16px">
-      <div class="section-title" style="padding:4px 0 12px" data-i18n="popular_tags">POPULAR TAGS</div>
+  <!-- padding-top accounts for: safe-top + 52px header + 16px breathing room -->
+  <main class="main-scroll">
+    <div style="padding: 0 16px 16px">
+      <div class="section-title" style="padding: 4px 0 12px" data-i18n="popular_tags">POPULAR TAGS</div>
       <div class="tag-row" id="popularTags"></div>
     </div>
     <div class="grid-2col" id="searchResults"></div>

@@ -18,13 +18,11 @@
 </head>
 <body>
 <div class="noise-overlay"></div>
-
 <header class="app-header">
   <div class="header-inner">
     <span class="logo">WLPR</span>
     <div class="header-right">
-      <button class="theme-btn" onclick="quickToggleTheme()" title="Toggle theme">☀</button>
-      <button class="header-btn" onclick="nav('search.html')">
+      <button class="header-btn" onclick="location.href='search.html'">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>
     </div>
@@ -32,20 +30,17 @@
 </header>
 
 <div class="page-wrap">
-
-  <!-- Hero -->
   <section class="hero-banner" id="heroBanner">
     <div class="hero-bg-gradient" id="heroBgGradient"></div>
     <img class="hero-bg-img" id="heroBgImg" src="" alt="" onerror="this.style.display='none'"/>
     <div class="hero-content">
       <div class="hero-tag" data-i18n="new_drop">NEW DROP</div>
-      <h2 class="hero-title" id="heroTitle" style="transition:opacity 0.3s">—</h2>
+      <h2 class="hero-title" id="heroTitle">—</h2>
       <p class="hero-sub" id="heroSub"></p>
     </div>
     <div class="hero-dots" id="heroDots"></div>
   </section>
 
-  <!-- Tabs -->
   <div class="tabs-bar">
     <button class="tab active" data-tab="all"    data-i18n="all">ALL</button>
     <button class="tab"        data-tab="static" data-i18n="static">STATIC</button>
@@ -54,35 +49,30 @@
   </div>
 
   <main class="main-scroll">
-
-    <!-- New drops -->
     <section class="section">
       <div class="section-header">
         <span class="section-title" data-i18n="recently_added">RECENTLY ADDED</span>
-        <a class="section-link" onclick="nav('browse.html?filter=new')" data-i18n="see_all">SEE ALL →</a>
+        <a class="section-link" href="browse.html?filter=new" data-i18n="see_all">SEE ALL →</a>
       </div>
       <div class="horiz-scroll" id="newDrops"></div>
     </section>
 
-    <!-- Live -->
     <section class="section">
       <div class="section-header">
         <span class="section-title" data-i18n="live_wallpapers">LIVE</span>
-        <a class="section-link" onclick="nav('browse.html?filter=live')" data-i18n="see_all">SEE ALL →</a>
+        <a class="section-link" href="browse.html?filter=live" data-i18n="see_all">SEE ALL →</a>
       </div>
       <div class="horiz-scroll" id="liveSection"></div>
     </section>
 
-    <!-- APK -->
     <section class="section">
       <div class="section-header">
         <span class="section-title" data-i18n="apk_wallpapers">APK LIVE</span>
-        <a class="section-link" onclick="nav('browse.html?filter=apk')" data-i18n="see_all">SEE ALL →</a>
+        <a class="section-link" href="browse.html?filter=apk" data-i18n="see_all">SEE ALL →</a>
       </div>
       <div class="horiz-scroll" id="apkSection"></div>
     </section>
 
-    <!-- Collections -->
     <section class="section">
       <div class="section-header">
         <span class="section-title" data-i18n="collections">COLLECTIONS</span>
@@ -90,22 +80,19 @@
       <div class="horiz-scroll" id="collectionsRow"></div>
     </section>
 
-    <!-- Browse grid -->
     <section class="section">
       <div class="section-header">
         <span class="section-title" data-i18n="browse">BROWSE</span>
-        <a class="section-link" onclick="nav('browse.html')" data-i18n="see_all">SEE ALL →</a>
+        <a class="section-link" href="browse.html" data-i18n="see_all">SEE ALL →</a>
       </div>
       <div class="grid-2col" id="browseGrid"></div>
     </section>
-
     <div class="bottomspace"></div>
   </main>
 </div>
 
 <nav class="bottom-nav"></nav>
 <div class="nav-fade"></div>
-
 <script src="assets/app.js"></script>
 <script>initHomePage();</script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js').catch(()=>{})</script>

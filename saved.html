@@ -17,26 +17,25 @@
 </head>
 <body>
 <div class="noise-overlay"></div>
-
 <header class="app-header">
   <div class="header-inner">
     <span class="logo" data-i18n="saved">SAVED</span>
-    <div class="header-right">
-      <button class="theme-btn" onclick="quickToggleTheme()">☀</button>
-      <button class="header-btn" id="clearBtn" onclick="clearSaved()" style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:1px;width:auto;padding:0 4px">CLEAR</button>
-    </div>
+    <button class="header-btn" id="clearBtn" onclick="clearSaved()"
+      style="font-family:'Space Mono',monospace;font-size:0.6rem;letter-spacing:1px;width:auto;padding:0 4px">
+      CLEAR
+    </button>
   </div>
 </header>
 
 <div class="page-wrap">
   <main class="main-scroll" style="padding-top:8px">
-
     <div class="empty-state" id="emptyState" style="display:none">
-      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
       <p data-i18n="no_saved">NO SAVED WALLPAPERS YET</p>
-      <a class="empty-cta" onclick="nav('browse.html')" data-i18n="browse_now">BROWSE NOW →</a>
+      <a class="empty-cta" href="browse.html" data-i18n="browse_now">BROWSE NOW →</a>
     </div>
-
     <div class="grid-2col" id="savedGrid"></div>
     <div class="bottomspace"></div>
   </main>
@@ -44,7 +43,6 @@
 
 <nav class="bottom-nav"></nav>
 <div class="nav-fade"></div>
-
 <script src="assets/app.js"></script>
 <script>initSavedPage();</script>
 <script>if('serviceWorker'in navigator)navigator.serviceWorker.register('service-worker.js').catch(()=>{})</script>
