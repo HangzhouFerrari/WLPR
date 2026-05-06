@@ -209,6 +209,41 @@ const TRANSLATIONS = {
     share:'Condividi', copy_link:'Copia link', open_browser:'Apri nel browser',
     save_image:'Salva immagine', copied:'Link copiato!',
   },
+  sk: {
+    home:'Domov', browse:'Prehľadávať', saved:'Uložené', more:'Viac',
+    new:'Nové', new_drop:'Nová kolekcia', see_all:'Zobraziť všetko →',
+    recently_added:'Nedávno pridané', live_wallpapers:'Živé tapety',
+    apk_wallpapers:'Živé tapety APK', collections:'Kolekcie',
+    all:'Všetky', static:'Statické', live:'Živé', apk:'APK',
+    abstract:'Abstraktné', nature:'Príroda',
+    search_placeholder:'HĽADAŤ TAPETY', popular_tags:'POPULÁRNE TAGY',
+    no_results:'Žiadne výsledky', no_saved:'Zatiaľ žiadne uložené tapety',
+    browse_now:'PREHĽADÁVAŤ →', clear:'VYMAZAŤ',
+    download:'Stiahnuť tapetu', install_apk:'Stiahnuť APK',
+    more_like_this:'Viac podobných',
+    settings_app:'Aplikácia', settings_display:'Zobrazenie',
+    settings_language:'Jazyk', settings_theme:'Téma', settings_about:'O aplikácii',
+    all_wallpapers:'Všetky tapety', grid_size:'Veľkosť mriežky',
+    version:'Verzia', github:'GitHub',
+    theme_auto:'AUTO', theme_dark:'TMAVÁ', theme_light:'SVETLÁ',
+    collection:'Kolekcia',
+    collection_items: n => `${n} tapeta${n===1?'':n>=2&&n<=4?'e':'í'}`,
+    wallpaper_count: n => `${n} tapeta${n===1?'':n>=2&&n<=4?'e':'í'}`,
+    results_for: (q,n) => `${n} výsledok${n===1?'':'ov'} pre „${q}"`,
+    search_count: n => `${n} tapeta${n===1?'':n>=2&&n<=4?'e':'í'}`,
+    apk_guide_title:'— Návod na inštaláciu —',
+    apk_step1:'Stiahni APK súbor tlačidlom nižšie.',
+    apk_step2:'Otvor správcu súborov a klepni na stiahnutý APK.',
+    apk_step3:'Ak sa zobrazí výzva, povoľ inštaláciu z neznámych zdrojov v Nastavenia → Zabezpečenie.',
+    apk_step4:'Nainštaluj aplikáciu. Zobrazí sa ako samostatná živá tapeta.',
+    apk_step5:'Prejdi do Nastavenia → Displej → Tapeta (alebo podrž stlačenú plochu) a vyber „Živé tapety".',
+    apk_step6:'Nájdi tapetu podľa názvu a klepni na „Nastaviť ako tapetu".',
+    apk_note:'Poznámka: Toto je samostatný APK pre živé tapety, nie bežná aplikácia. Nezobrazí sa v zozname aplikácií.',
+    requires:'Požiadavky', size:'Veľkosť',
+    type_apk:'APK · Živá', type_live:'Živá', type_static:'Statická',
+    share:'Zdieľať', copy_link:'Kopírovať odkaz', open_browser:'Otvoriť v prehliadači',
+    save_image:'Uložiť obrázok', copied:'Odkaz skopírovaný!',
+  },
   pt: {
     home:'Home', browse:'Explorar', saved:'Salvos', more:'Mais',
     new:'NOVO', new_drop:'NOVO DROP', see_all:'VER TUDO →',
@@ -426,5 +461,9 @@ function t(key, ...args) {
   const val = TRANSLATIONS[lang]?.[key] ?? TRANSLATIONS['en']?.[key] ?? key;
   return typeof val === 'function' ? val(...args) : val;
 }
-function getLang() { return localStorage.getItem('wlpr_lang') || 'en'; }
+function getLang() {
+  if (localStorage.getItem('wlpr_lang')) return localStorage.getItem('wlpr_lang');
+  const sys = (navigator.language || navigator.userLanguage || 'en').split('-')[0];
+  return TRANSLATIONS[sys] ? sys : 'en';
+}
 function setLang(lang) { localStorage.setItem('wlpr_lang', lang); }
