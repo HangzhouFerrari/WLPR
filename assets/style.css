@@ -428,3 +428,77 @@ button { font-family: inherit; }
 .wp-a003{background:linear-gradient(160deg,#020d1a 0%,#0a2a1a 50%,#00ff99 100%)}
 .wp-a004{background:radial-gradient(ellipse at 50% 30%,#c084fc 0%,#4a1a7a 50%,#0a0a0a 100%)}
 .wp-a005{background:linear-gradient(160deg,#3d2200 0%,#8b6914 50%,#f5c842 100%)}
+
+/* ── RTL (Right-to-Left) layout — Arabic and other RTL languages ─────── */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Bottom nav: icon+label stacking stays centered, no change needed */
+[dir="rtl"] .bottom-nav {
+  direction: rtl;
+}
+
+/* Search bar: flip icon side */
+[dir="rtl"] .search-bar {
+  direction: rtl;
+}
+[dir="rtl"] .search-bar input {
+  text-align: right;
+}
+
+/* Section headers / "see all" link flips to left */
+[dir="rtl"] .section-header {
+  flex-direction: row-reverse;
+}
+
+/* Tags / pills row */
+[dir="rtl"] .tags-row,
+[dir="rtl"] .filter-pills {
+  direction: rtl;
+}
+
+/* Detail panel metadata */
+[dir="rtl"] .panel-meta,
+[dir="rtl"] .tag-row {
+  direction: rtl;
+}
+
+/* Settings rows */
+[dir="rtl"] .settings-row,
+[dir="rtl"] .settings-item {
+  flex-direction: row-reverse;
+}
+
+/* Share / action buttons row */
+[dir="rtl"] .share-row,
+[dir="rtl"] .action-row {
+  flex-direction: row-reverse;
+}
+
+/* APK install steps — numbers stay on the outside */
+[dir="rtl"] .apk-step {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Browse "→" arrow flips for RTL */
+[dir="rtl"] .browse-arrow::after {
+  content: ' ←';
+}
+
+/* Hero banner text */
+[dir="rtl"] .hero-text {
+  text-align: right;
+}
+
+/* Grid stays LTR internally (card order unchanged) */
+[dir="rtl"] .grid,
+[dir="rtl"] .wallpaper-grid {
+  direction: ltr;
+}
+
+/* Collection rows scroll direction */
+[dir="rtl"] .row-scroll {
+  direction: rtl;
+}

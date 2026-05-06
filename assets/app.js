@@ -86,9 +86,19 @@ function pageIn() {
   requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('visible')));
 }
 
+const RTL_LANGS = ['ar', 'he', 'fa', 'ur'];
+
+function applyDir() {
+  const lang = getLang();
+  const isRtl = RTL_LANGS.includes(lang);
+  document.documentElement.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+  document.documentElement.setAttribute('lang', lang);
+}
+
 function translatePage() {
   document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
   document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  applyDir();
 }
 
 function getGridCols() { return parseInt(localStorage.getItem('wlpr_cols') || '2'); }
